@@ -1,0 +1,29 @@
+{
+  "id": "00-bootstrap-guidelines",
+  "name": "00-bootstrap-guidelines",
+  "title": "Bootstrap Guidelines",
+  "description": "Replace generated fullstack templates with project-specific DiskScry guidelines",
+  "status": "in_progress",
+  "dev_type": "docs",
+  "scope": ".trellis/spec/application and .trellis/spec/guides",
+  "package": null,
+  "priority": "P1",
+  "creator": "ZHOUSJ",
+  "assignee": "ZHOUSJ",
+  "createdAt": "2026-07-11",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": null,
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    ".trellis/spec/application/",
+    ".trellis/spec/guides/"
+  ],
+  "notes": "Repository has no product source yet; specs capture confirmed Rust/macOS/Linux scope without inventing code patterns",
+  "meta": {}
+}
