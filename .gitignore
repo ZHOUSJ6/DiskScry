@@ -1,0 +1,4 @@
+/target/
+.mindfs/
+*.profraw
+.DS_Store

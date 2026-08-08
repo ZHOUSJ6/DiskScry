@@ -19,28 +19,33 @@ All external physical disks discovered by macOS or Linux must remain visible in 
 When SMART data cannot be read:
 
 - Keep the external disk visible.
-- Display the exact primary label `SMART unavailable`.
+- Display `SMART unavailable` in English and the exact human label `SMART 不可用` in Simplified Chinese.
 - Preserve an unsupported or failed reason for diagnostics.
 - Do not derive a healthy status from missing SMART data.
 
 The executable cross-layer contract is defined in [External Device SMART Visibility](./external-device-smart-visibility.md).
 
-## Current Repository State
+## Repository Structure
 
-The repository has no `Cargo.toml`, `src/`, test suite, release configuration, or established Rust module layout. The generated backend/frontend Trellis templates did not describe this project and were removed during bootstrap.
+The Rust package is defined by `Cargo.toml` and `Cargo.lock`. Product code lives under `src/`:
 
-Until product code exists:
+- `src/domain/` owns normalized device, SMART, and health types.
+- `src/protocol/` owns ATA and NVMe byte parsing.
+- `src/platform/` owns operating-system discovery, events, and transport calls.
+- `src/app.rs` owns SMART enrichment and normalized snapshots.
+- `src/cli.rs` and `src/presentation/` own user-facing projections.
 
-- Do not document hypothetical modules as existing conventions.
-- Do not add database, web frontend, TypeScript, API server, or ORM rules without an approved task that introduces them.
-- Treat the first Rust implementation task as the source of truth for initial module and test structure, then update these specs with real file paths and symbols.
+Do not add database, web frontend, TypeScript, API server, or ORM rules without an approved task that introduces them.
 
 ## Decisions Requiring A Product Task
 
-The following choices are not settled by the current repository:
+The current product decisions are:
 
-- The SMART acquisition backend and whether an external tool is a runtime dependency.
-- Persistence, history retention, alerting, self-tests, and privileged write operations.
-- Packaging outside the initial macOS-first distribution path.
+- SMART acquisition uses native Rust platform backends and does not invoke or bundle smartmontools.
+- The first release is read-only and keeps monitoring samples in memory for the process lifetime.
+- Alerts, persistence, self-tests, privileged helpers, Homebrew publication, signing, and notarization remain outside the developer preview.
+- Source installation and macOS Apple Silicon/Intel build artifacts are the initial distribution path.
+- English and Simplified Chinese are the supported human interface languages. CLI syntax and JSON vocabulary remain language-independent English.
+- Readable ATA names may derive from a revision-pinned, attributed CrystalDiskInfo MIT metadata snapshot. CrystalDiskInfo transport, Windows code, runtime resources, and automatic updates remain excluded.
 
 An implementation task must resolve any choice it depends on in its PRD or design before code is written.

@@ -41,4 +41,22 @@ platform source -> acquisition result -> normalized snapshot -> health result ->
 
 ## Verification
 
-There are no product validation commands yet. The first Rust implementation task must define the repository's formatting, linting, test, and fixture commands in its implementation plan. After those commands and representative source files exist, replace this bootstrap-level section with exact commands and file-backed examples.
+Run from the repository root:
+
+```bash
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+cargo test --workspace --all-features
+cargo test --doc --workspace
+cargo build --release
+```
+
+macOS release validation also builds `x86_64-apple-darwin` and runs the ignored Disk Arbitration tests outside restricted sandboxes:
+
+```bash
+cargo build --release --target x86_64-apple-darwin
+cargo test platform::macos::events::tests -- --ignored
+cargo install --path . --root /tmp/diskscry-install-check --locked --force
+```
+
+Parser, health, JSON, CLI, scheduler, stale-refresh, and Ratatui rendering tests live beside their owning modules. macOS hardware-dependent tests are ignored in the default suite because restricted process sandboxes can deny Disk Arbitration and IOKit user clients.
