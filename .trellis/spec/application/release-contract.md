@@ -36,6 +36,8 @@ SHA256SUMS
 - Developer-preview binaries are unsigned and not notarized; the README and release notes disclose this.
 - Source installation uses the same release tag and `--locked` dependency resolution.
 - A release is not published from an uncommitted worktree or after a failed quality-gate command.
+- `.github/workflows/release.yml` publishes with the repository-scoped `GITHUB_TOKEN` and `contents: write`; no personal token is stored in the repository.
+- Tag pushes publish their matching tag. A `main` push that changes `Cargo.toml` or the release workflow resolves the current Cargo version and publishes its existing tag. Existing releases are left unchanged.
 
 ## 4. Validation & Error Matrix
 
